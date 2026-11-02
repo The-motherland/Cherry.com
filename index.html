@@ -111,138 +111,208 @@
       border-radius: 20px;
       background-color: white;
     }
+
+    /* --- Added Verification & Section Toggle CSS --- */
+    .verification-card {
+      box-shadow: 0 10px 30px rgba(74, 222, 128, 0.3);
+      border: 3px solid rgba(0, 0, 0, 0.6);
+      background-color: white;
+      border-radius: 20px;
+      display: flex;
+      flex-direction: row;
+      padding: 20px;
+      max-width: 650px;
+      margin: 120px auto;
+      align-items: center;
+    }
+    
+    input {
+      padding: 15px;
+    }
+
+    .V-page.hidden {
+      display: none !important;
+    }
+
+    .V-page.active {
+      display: block;
+    }
     
   </style>
   <body>
-    <header>
-      <img src="webBanner.png" id="home">
-    </header>
-    
-    
-    <nav>
-      <a href="#home"><button>Home</button></a>
-      <a href="#class-officers"><button>Class Officers</button></a>
-      <a href="#advisory"><button>Advisory</button></a>
-      <a href="#privacy"><button>Privacy</button></a>
-    </nav>
-    
-    <div>
-      <div class="rank-card">
-        <h2><i class="fa-solid fa-ranking-star"></i>Ranking:</h2>
-        <p>Rank: 3</p>
-        <p>10 Cherry ranked third runner up in model section of the month.</p>
+    <!-- Added Security Verification Section -->
+    <section id="securityVerification-card" class="V-page active">
+      <div class="verification-card">
+        <input type="checkbox" id="security-checkbox">
+        <p style="padding: 20px;" id="verification-text">Verification process, please wait, we are verifying possible phising or personal information stealer.</p>
+        <p style="font-weight: bold;"><i class="fa-brands fa-github" style="font-size: 30px;"></i>Github</p>
       </div>
-      <br>
-      <br>
-      <div class="container">
-        <h2><i class="fa-solid fa-book"></i>Reminders:</h2>
-        <p>Assignments:</p>
-        <ul>
-          <li>Filipino - Sanaysay</li>
-          <li>EsP - Roleplay (duladulaan)</li>
-        </ul>
-      </div>
-      <br>
-      <br>
-      <div class="classOfficers-card">
-        <h2 id="class-officers"><i class="fa-solid fa-people-group"></i>Officers</h2>
-        <div class="card">
-          <p><i class="fa-solid fa-user"></i>Stephanie Mae Danay</p>
-          <h5>President</h5>
-          <br>
-          <p><i class="fa-solid fa-user"></i>Criztal Fabayos</p>
-          <h5>Vice-President</h5>
-          <br>
-          <p><i class="fa-solid fa-clipboard"></i>Allyza Marie Fajartin</p>
-          <h5>Secretary</h5>
-          <br>
-          <p><i class="fa-solid fa-money-bill"></i>Shanea Alexa Utlang</p>
-          <h5>Treasurer</h5>
-          <br>
-          <p><i class="fa-solid fa-file-invoice"></i>Alynna Joy Abapo</p>
-          <h5>Auditor</h5>
-          <br>
-          <p><i class="fa-solid fa-shield-halved"></i>Vincent Donato</p>
-          <h5>Peace Officer</h5>
-          <br>
-          <p><i class="fa-solid fa-shield-halved"></i>Precious Gwen Severino</p>
-          <h5>Peace Officer</h5>
-          <br>
-          <p><i class="fa-solid fa-bullhorn"></i>Crystal Faith Fermato</p>
-          <h5>Public Information Officer</h5>
-          <br>
-          <p><i class="fa-solid fa-suitcase"></i>Rheben Jay Heyres</p>
-          <h5>Business Manager</h5>
-          <br>
-          <p><i class="fa-solid fa-suitcase"></i>Venz Daniel Gurra</p>
-          <h5>Business Manager</h5>
+    </section>
+
+    <!-- Main Website Wrapped in V-page Section -->
+    <section id="main-portal-section" class="V-page hidden">
+      <header>
+        <img src="webBanner.png" id="home">
+      </header>
+      
+      
+      <nav>
+        <a href="#home"><button>Home</button></a>
+        <a href="#class-officers"><button>Class Officers</button></a>
+        <a href="#advisory"><button>Advisory</button></a>
+        <a href="#privacy"><button>Privacy</button></a>
+      </nav>
+      
+      <div>
+        <div class="rank-card">
+          <h2><i class="fa-solid fa-ranking-star"></i>Ranking:</h2>
+          <p>Rank: 3</p>
+          <p>10 Cherry ranked third runner up in model section of the month.</p>
         </div>
         <br>
         <br>
-        <h2>Muse and Escort</h2>
-        <div class="card">
-          <p><i class="fa-solid fa-crown"></i>Regine Khen Humpay</p>
-          <h5>Muse</h5>
-          <br>
-          <p><i class="fa-solid fa-person-military-pointing"></i>Jian Carlo Banaag</p>
-          <h5>Escort</h5>
+        <div class="container">
+          <h2><i class="fa-solid fa-book"></i>Reminders:</h2>
+          <p>Assignments:</p>
+          <ul>
+            <li>Filipino - Sanaysay</li>
+            <li>EsP - Roleplay (duladulaan)</li>
+          </ul>
         </div>
-      </div>
-      
-      <h2 id="advisory" style="color: white;"><i class="fa-solid fa-person-chalkboard"></i>Advisory</h2>
-      <div class="advisory-card">
-        <p><i class="fa-solid fa-chalkboard-user"></i>Mrs. Kristine Anne Huinda</p>
-        <h5>Adviser</h5>
         <br>
-        <p><i class="fa-solid fa-chalkboard-user"></i>Mrs. Jocelyn Solatorio</p>
-        <h5>Co-Adviser</h5>
+        <br>
+        <div class="classOfficers-card">
+          <h2 id="class-officers"><i class="fa-solid fa-people-group"></i>Officers</h2>
+          <div class="card">
+            <p><i class="fa-solid fa-user"></i>Stephanie Mae Danay</p>
+            <h5>President</h5>
+            <br>
+            <p><i class="fa-solid fa-user"></i>Criztal Fabayos</p>
+            <h5>Vice-President</h5>
+            <br>
+            <p><i class="fa-solid fa-clipboard"></i>Allyza Marie Fajartin</p>
+            <h5>Secretary</h5>
+            <br>
+            <p><i class="fa-solid fa-money-bill"></i>Shanea Alexa Utlang</p>
+            <h5>Treasurer</h5>
+            <br>
+            <p><i class="fa-solid fa-file-invoice"></i>Alynna Joy Abapo</p>
+            <h5>Auditor</h5>
+            <br>
+            <p><i class="fa-solid fa-shield-halved"></i>Vincent Donato</p>
+            <h5>Peace Officer</h5>
+            <br>
+            <p><i class="fa-solid fa-shield-halved"></i>Precious Gwen Severino</p>
+            <h5>Peace Officer</h5>
+            <br>
+            <p><i class="fa-solid fa-bullhorn"></i>Crystal Faith Fermato</p>
+            <h5>Public Information Officer</h5>
+            <br>
+            <p><i class="fa-solid fa-suitcase"></i>Rheben Jay Heyres</p>
+            <h5>Business Manager</h5>
+            <br>
+            <p><i class="fa-solid fa-suitcase"></i>Venz Daniel Gurra</p>
+            <h5>Business Manager</h5>
+          </div>
+          <br>
+          <br>
+          <h2>Muse and Escort</h2>
+          <div class="card">
+            <p><i class="fa-solid fa-crown"></i>Regine Khen Humpay</p>
+            <h5>Muse</h5>
+            <br>
+            <p><i class="fa-solid fa-person-military-pointing"></i>Jian Carlo Banaag</p>
+            <h5>Escort</h5>
+          </div>
+        </div>
+        
+        <h2 id="advisory" style="color: white;"><i class="fa-solid fa-person-chalkboard"></i>Advisory</h2>
+        <div class="advisory-card">
+          <p><i class="fa-solid fa-chalkboard-user"></i>Mrs. Kristine Anne Huinda</p>
+          <h5>Adviser</h5>
+          <br>
+          <p><i class="fa-solid fa-chalkboard-user"></i>Mrs. Jocelyn Solatorio</p>
+          <h5>Co-Adviser</h5>
+        </div>
+        
+        <h2 style="color: white;" id="privacy"><i class="fa-solid fa-user-shield"></i>Privacy</h2>
+        <div class="privacy-card">
+          <p><b>Student Privacy Policy
+  Effective Date: November 1, 2026</b>
+  <br><br>
+  We value and respect the privacy of all students and users who visit this website.
+  <br>
+  <br>
+  <b>No Personal Data Collected</b>
+  <br>
+  <br>
+  This is a self-service, educational-only website. We do <b>not</b> collect:
+  <br>
+  <br>
+  - Cookies<br>
+  - Names, emails, or contact information<br>
+  - Login or sign-up information<br>
+  - User profiles or accounts<br>
+  - Tracking or analytics data
+  <br>
+  <br>
+  <b>How The Site Works</b>
+  <br>
+  <br>
+  All content is accessible directly without registration. You can browse, read, and learn freely. Nothing you do on this site is stored, tracked, or shared.
+  <br>
+  <br>
+  <b>Educational Purpose</b>
+  <br>
+  <br>
+  This website exists solely for educational purposes. All materials are provided to support student learning.
+  <br>
+  <br>
+  <b>External Links</b>
+  <br>
+  <br>
+  Our site may contain links to other educational resources. We are not responsible for the privacy practices of external websites.
+  <br>
+  <br>
+  > <b>Our Commitment:</b> Your privacy is fully protected because we do not collect anything. You remain anonymous while using this website.</p>
+        </div>
+        <br>
+        <br>
+        <footer>&copy; 2026 • Lapuz NHS • All rights reserved.</footer>
       </div>
-      
-      <h2 style="color: white;" id="privacy"><i class="fa-solid fa-user-shield"></i>Privacy</h2>
-      <div class="privacy-card">
-        <p><b>Student Privacy Policy
-Effective Date: November 1, 2026</b>
-<br><br>
-We value and respect the privacy of all students and users who visit this website.
-<br>
-<br>
-<b>No Personal Data Collected</b>
-<br>
-<br>
-This is a self-service, educational-only website. We do <b>not</b> collect:
-<br>
-<br>
-- Cookies<br>
-- Names, emails, or contact information<br>
-- Login or sign-up information<br>
-- User profiles or accounts<br>
-- Tracking or analytics data
-<br>
-<br>
-<b>How The Site Works</b>
-<br>
-<br>
-All content is accessible directly without registration. You can browse, read, and learn freely. Nothing you do on this site is stored, tracked, or shared.
-<br>
-<br>
-<b>Educational Purpose</b>
-<br>
-<br>
-This website exists solely for educational purposes. All materials are provided to support student learning.
-<br>
-<br>
-<b>External Links</b>
-<br>
-<br>
-Our site may contain links to other educational resources. We are not responsible for the privacy practices of external websites.
-<br>
-<br>
-> <b>Our Commitment:</b> Your privacy is fully protected because we do not collect anything. You remain anonymous while using this website.</p>
-      </div>
-      <br>
-      <br>
-      <footer>&copy; 2026 • Lapuz NHS • All rights reserved.</footer>
-    </div>
+    </section>
+
+    <!-- Added Verification JavaScript Function -->
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const checkbox = document.getElementById('security-checkbox');
+        const verificationText = document.getElementById('verification-text');
+        const verificationSection = document.getElementById('securityVerification-card');
+        const mainPortalSection = document.getElementById('main-portal-section');
+
+        if (checkbox) {
+          checkbox.addEventListener('change', () => {
+            if (checkbox.checked) {
+              checkbox.disabled = true;
+              verificationText.innerText = "Checking security parameters... Please wait.";
+
+              setTimeout(() => {
+                verificationText.innerText = "Verified successfully! Redirecting to portal...";
+
+                setTimeout(() => {
+                  verificationSection.classList.remove('active');
+                  verificationSection.classList.add('hidden');
+
+                  mainPortalSection.classList.remove('hidden');
+                  mainPortalSection.classList.add('active');
+                }, 600);
+                
+              }, 1500);
+            }
+          });
+        }
+      });
+    </script>
     
   </body>
-</html>
+  </html>
