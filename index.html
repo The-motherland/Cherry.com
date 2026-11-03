@@ -528,63 +528,50 @@
       if (!prompt) return;
       this.#appendChatBubble('user', prompt);
       this.#elements.userInput.value = '';
-      const loadingBubble = this.#appendChatBubble('ai', 'Lenora is searching for complete answer...');
+      const loadingBubble = this.#appendChatBubble('ai', 'Lenora is thinking...');
 
       try {
-        const systemPrompt = `
-You are Lenora AI, tutor for Grade 10 Cherry, Lapuz NHS. Be resourceful, accurate, helpful.
-
-STRICT RULES FOR YOUR ANSWER:
-1. NO asterisks, NO **, NO *. Use plain text only.
-2. NO ellipsis ... at the end. Give complete answer, finish all sentences.
-3. Use normal emojis only like 😊 📚 ✅ 💡 🔍 📝 ❤️
-4. Understand the question deeply and answer accurately. If math, solve completely. If science, explain completely.
-5. Give whole answer with documentation, not summary.
-
-FORMAT TO FOLLOW:
-📚 Answer: [Direct complete answer]
-
-🔍 Explanation: [Full step-by-step explanation, complete, no cut]
-
-📝 Example: [One complete example]
-
-💡 Tip: [Study tip]
-
-❓ Question: [Ask one follow-up to keep interactive]
-
-Student question: ${prompt}
-`;
-
-        const response = await puter.ai.chat(systemPrompt, {
-          model: "claude-sonnet-4"
+        const response = await fetch('https://text.pollinations.ai/openai', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            model: 'openai',
+            messages: [
+              {
+                role: 'system',
+                content: 'You are Lenora AI, resourceful tutor for Grade 10 Cherry Lapuz NHS. RULES: 1. NO asterisks, NO **, plain text only. 2. NO ... at end, give complete full answer. 3. Use normal emojis like 😊 📚 ✅ 💡 🔍 📝 4. Understand question and answer accurately. 5. Give whole answer with documentation. Format: 📚 Answer: [complete direct answer] Then 🔍 Explanation: [full step by step complete] Then 📝 Example: [one complete example] Then 💡 Tip: [study tip] Then ❓ Question: [one interactive follow up]. Keep helpful and interactive.'
+              },
+              { role: 'user', content: prompt }
+            ]
+          })
         });
 
+        if (!response.ok) throw new Error('AI busy ' + response.status);
+
+        const data = await response.json();
         loadingBubble.remove();
-        let aiText = typeof response === 'string' ? response : response.toString();
-        
-        // Clean any asterisks if model still adds them
-        aiText = aiText.replace(/\*\*/g, '').replace(/\*/g, '');
+
+        let aiText = data.choices?.[0]?.message?.content || 'Sorry, I cannot get answer now 😊';
+        aiText = aiText.replace(/\*\*/g, '').replace(/\*/g, '').replace(/###/g, '').trim();
 
         this.#appendChatBubble('ai', aiText);
 
       } catch (err) {
         loadingBubble.remove();
-        console.error(err);
+        console.error('Lenora error:', err);
         try {
-          // Fallback Wikipedia - get FULL article, not snippet
           const searchRes = await fetch(`https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(prompt)}&format=json&origin=*`);
           const searchData = await searchRes.json();
           const title = searchData.query?.search?.[0]?.title;
           if (title) {
             const summaryRes = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`);
             const summaryData = await summaryRes.json();
-            const fullText = summaryData.extract; // This is complete, no ...
-            this.#appendChatBubble('ai', `📚 Answer: ${fullText}\n\n🔍 Explanation: This is from Wikipedia about ${title}. It is important for Grade 10.\n\n💡 Tip: Read your textbook for more details.\n\n❓ Question: Do you want me to explain this in simpler Tagalog? 😊`);
+            this.#appendChatBubble('ai', `📚 Answer: ${summaryData.extract}\n\n🔍 Explanation: This topic ${title} is important for Grade 10 lessons.\n\n📝 Example: You can find this in your textbook about ${title}.\n\n💡 Tip: Try to make your own notes 😊\n\n❓ Question: Do you want me to explain this in Tagalog?`);
           } else {
-            this.#appendChatBubble('ai', `Sorry, I cannot find complete answer for "${prompt}" right now. Can you ask in different way? 😊`);
+            this.#appendChatBubble('ai', `AI is busy right now 😊 Please wait 5 seconds and ask again.`);
           }
         } catch (e) {
-          this.#appendChatBubble('ai', `No internet connection right now. Please check WiFi and try again 😊`);
+          this.#appendChatBubble('ai', `No internet connection 😊 Please check WiFi and try again.`);
         }
       }
     }
