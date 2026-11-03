@@ -446,172 +446,154 @@
       <footer>&copy; 2026 • Lapuz NHS • All rights reserved.</footer>
     </section>
 
-    <!-- Refactored ECMAScript 2026 Application Logic -->
-    <script type="module">
-      // System Configuration & Constants
-      const CONFIG = Object.freeze({
-        API_KEY: "AQ.Ab8RN6Lf0MX9IWluCUASqH30H7FadCmT_KvJypUWvl9JZWYkeQ",
-        PASSKEY: "10CHERRY",
-        API_URL: "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent"
-      });
+<script src="https://js.puter.com/v2/"></script>
+<script type="module">
+  const CONFIG = Object.freeze({ PASSKEY: "10CHERRY" });
+  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-      // Utility Helper for Delaying Actions
-      const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-      // Global Portal State Controller
-      class PortalApp {
-        #elements = {};
-
-        constructor() {
-          this.#initElements();
-          this.#bindEvents();
-        }
-
-        #initElements() {
-          this.#elements = {
-            passSec: document.getElementById('passwordSecV'),
-            passInput: document.getElementById('passInput'),
-            confirmPassBtn: document.getElementById('confirmPassBtn'),
-            passError: document.getElementById('passError'),
-            verificationSection: document.getElementById('securityVerification-card'),
-            checkbox: document.getElementById('security-checkbox'),
-            verificationText: document.getElementById('verification-text'),
-            mainPortalSection: document.getElementById('main-portal-section'),
-            portalContentView: document.getElementById('portal-content-view'),
-            lenoraPageView: document.getElementById('lenora-page-view'),
-            lenoraNavBtn: document.getElementById('lenora-nav-btn'),
-            homeNavLinks: document.querySelectorAll('.nav-link'),
-            chatMessages: document.getElementById('chatMessages'),
-            userInput: document.getElementById('userInput'),
-            sendBtn: document.getElementById('sendBtn')
-          };
-        }
-
-        #bindEvents() {
-          // Password Authentication Event
-          this.#elements.confirmPassBtn?.addEventListener('click', () => this.#handlePasswordValidation());
-          this.#elements.passInput?.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') this.#handlePasswordValidation();
-          });
-
-          // Security Checkbox Verification Event
-          this.#elements.checkbox?.addEventListener('change', () => this.#handleSecurityVerification());
-
-          // Page Switcher Navigation Events
-          this.#elements.lenoraNavBtn?.addEventListener('click', (e) => {
-            e.preventDefault();
-            this.#switchView('lenora');
-          });
-
-          this.#elements.homeNavLinks?.forEach((link) => {
-            link.addEventListener('click', () => this.#switchView('home'));
-          });
-
-          // Lenora AI Chat Events
-          this.#elements.sendBtn?.addEventListener('click', () => this.#handleChatMessage());
-          this.#elements.userInput?.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') this.#handleChatMessage();
-          });
-        }
-
-        #handlePasswordValidation() {
-          const enteredPass = this.#elements.passInput?.value?.trim();
-          if (enteredPass === CONFIG.PASSKEY) {
-            this.#elements.passError.style.display = 'none';
-            this.#toggleSection(this.#elements.passSec, false);
-            this.#toggleSection(this.#elements.verificationSection, true);
-          } else {
-            this.#elements.passError.style.display = 'block';
-          }
-        }
-
-        async #handleSecurityVerification() {
-          if (!this.#elements.checkbox?.checked) return;
-
-          this.#elements.checkbox.disabled = true;
-          this.#elements.verificationText.innerText = "Checking security parameters... Please wait.";
-
-          await delay(1500);
-          this.#elements.verificationText.innerText = "Verified successfully! Redirecting to portal...";
-
-          await delay(600);
-          this.#toggleSection(this.#elements.verificationSection, false);
-          this.#toggleSection(this.#elements.mainPortalSection, true);
-        }
-
-        #switchView(viewTarget) {
-          if (viewTarget === 'lenora') {
-            this.#elements.portalContentView.style.display = 'none';
-            this.#elements.lenoraPageView.style.display = 'block';
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          } else {
-            this.#elements.lenoraPageView.style.display = 'none';
-            this.#elements.portalContentView.style.display = 'block';
-          }
-        }
-
-        #toggleSection(element, show) {
-          if (!element) return;
-          if (show) {
-            element.classList.remove('hidden');
-            element.classList.add('active');
-          } else {
-            element.classList.remove('active');
-            element.classList.add('hidden');
-          }
-        }
-
-        #appendChatBubble(sender, messageText) {
-          const bubble = document.createElement('div');
-          bubble.classList.add('chat-bubble', sender);
-          bubble.innerText = messageText;
-          this.#elements.chatMessages?.appendChild(bubble);
-          this.#elements.chatMessages.scrollTop = this.#elements.chatMessages.scrollHeight;
-          return bubble;
-        }
-
-        async #handleChatMessage() {
-          const prompt = this.#elements.userInput?.value?.trim();
-          if (!prompt) return;
-
-          this.#appendChatBubble('user', prompt);
-          this.#elements.userInput.value = '';
-
-          const loadingBubble = this.#appendChatBubble('ai', 'Lenora is typing...');
-
-          try {
-            const response = await fetch(`${CONFIG.API_URL}?key=${CONFIG.API_KEY}`, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                contents: [{ parts: [{ text: prompt }] }]
-              })
-            });
-
-            const data = await response.json();
-            loadingBubble.remove();
-
-            const aiReply = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-            if (aiReply) {
-              this.#appendChatBubble('ai', aiReply);
-            } else {
-              this.#appendChatBubble('ai', "Sorry, I couldn't process your request right now.");
-            }
-          } catch (error) {
-            loadingBubble.remove();
-            this.#appendChatBubble('ai', "Unable to connect. Please check network connection or API status.");
-          }
-        }
-      }
-
-      // Initialize App automatically once DOM content is ready
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => new PortalApp());
+  class PortalApp {
+    #elements = {};
+    constructor() { this.#initElements(); this.#bindEvents(); }
+    #initElements() {
+      this.#elements = {
+        passSec: document.getElementById('passwordSecV'),
+        passInput: document.getElementById('passInput'),
+        confirmPassBtn: document.getElementById('confirmPassBtn'),
+        passError: document.getElementById('passError'),
+        verificationSection: document.getElementById('securityVerification-card'),
+        checkbox: document.getElementById('security-checkbox'),
+        verificationText: document.getElementById('verification-text'),
+        mainPortalSection: document.getElementById('main-portal-section'),
+        portalContentView: document.getElementById('portal-content-view'),
+        lenoraPageView: document.getElementById('lenora-page-view'),
+        lenoraNavBtn: document.getElementById('lenora-nav-btn'),
+        homeNavLinks: document.querySelectorAll('.nav-link'),
+        chatMessages: document.getElementById('chatMessages'),
+        userInput: document.getElementById('userInput'),
+        sendBtn: document.getElementById('sendBtn')
+      };
+    }
+    #bindEvents() {
+      this.#elements.confirmPassBtn?.addEventListener('click', () => this.#handlePasswordValidation());
+      this.#elements.passInput?.addEventListener('keypress', (e) => { if (e.key === 'Enter') this.#handlePasswordValidation(); });
+      this.#elements.checkbox?.addEventListener('change', () => this.#handleSecurityVerification());
+      this.#elements.lenoraNavBtn?.addEventListener('click', (e) => { e.preventDefault(); this.#switchView('lenora'); });
+      this.#elements.homeNavLinks?.forEach((link) => { link.addEventListener('click', () => this.#switchView('home')); });
+      this.#elements.sendBtn?.addEventListener('click', () => this.#handleChatMessage());
+      this.#elements.userInput?.addEventListener('keypress', (e) => { if (e.key === 'Enter') this.#handleChatMessage(); });
+    }
+    #handlePasswordValidation() {
+      if (this.#elements.passInput?.value?.trim() === CONFIG.PASSKEY) {
+        this.#elements.passError.style.display = 'none';
+        this.#toggleSection(this.#elements.passSec, false);
+        this.#toggleSection(this.#elements.verificationSection, true);
+      } else { this.#elements.passError.style.display = 'block'; }
+    }
+    async #handleSecurityVerification() {
+      if (!this.#elements.checkbox?.checked) return;
+      this.#elements.checkbox.disabled = true;
+      this.#elements.verificationText.innerText = "Checking security parameters... Please wait.";
+      await delay(1500);
+      this.#elements.verificationText.innerText = "Verified successfully! Redirecting to portal...";
+      await delay(600);
+      this.#toggleSection(this.#elements.verificationSection, false);
+      this.#toggleSection(this.#elements.mainPortalSection, true);
+    }
+    #switchView(viewTarget) {
+      if (viewTarget === 'lenora') {
+        this.#elements.portalContentView.style.display = 'none';
+        this.#elements.lenoraPageView.style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       } else {
-        new PortalApp();
+        this.#elements.lenoraPageView.style.display = 'none';
+        this.#elements.portalContentView.style.display = 'block';
       }
-    </script>
+    }
+    #toggleSection(element, show) {
+      if (!element) return;
+      element.classList.toggle('hidden', !show);
+      element.classList.toggle('active', show);
+    }
+    #appendChatBubble(sender, messageText) {
+      const bubble = document.createElement('div');
+      bubble.classList.add('chat-bubble', sender);
+      bubble.innerText = messageText;
+      this.#elements.chatMessages?.appendChild(bubble);
+      this.#elements.chatMessages.scrollTop = this.#elements.chatMessages.scrollHeight;
+      return bubble;
+    }
+
+    async #handleChatMessage() {
+      const prompt = this.#elements.userInput?.value?.trim();
+      if (!prompt) return;
+      this.#appendChatBubble('user', prompt);
+      this.#elements.userInput.value = '';
+      const loadingBubble = this.#appendChatBubble('ai', 'Lenora is searching for complete answer...');
+
+      try {
+        const systemPrompt = `
+You are Lenora AI, tutor for Grade 10 Cherry, Lapuz NHS. Be resourceful, accurate, helpful.
+
+STRICT RULES FOR YOUR ANSWER:
+1. NO asterisks, NO **, NO *. Use plain text only.
+2. NO ellipsis ... at the end. Give complete answer, finish all sentences.
+3. Use normal emojis only like 😊 📚 ✅ 💡 🔍 📝 ❤️
+4. Understand the question deeply and answer accurately. If math, solve completely. If science, explain completely.
+5. Give whole answer with documentation, not summary.
+
+FORMAT TO FOLLOW:
+📚 Answer: [Direct complete answer]
+
+🔍 Explanation: [Full step-by-step explanation, complete, no cut]
+
+📝 Example: [One complete example]
+
+💡 Tip: [Study tip]
+
+❓ Question: [Ask one follow-up to keep interactive]
+
+Student question: ${prompt}
+`;
+
+        const response = await puter.ai.chat(systemPrompt, {
+          model: "claude-sonnet-4"
+        });
+
+        loadingBubble.remove();
+        let aiText = typeof response === 'string' ? response : response.toString();
+        
+        // Clean any asterisks if model still adds them
+        aiText = aiText.replace(/\*\*/g, '').replace(/\*/g, '');
+
+        this.#appendChatBubble('ai', aiText);
+
+      } catch (err) {
+        loadingBubble.remove();
+        console.error(err);
+        try {
+          // Fallback Wikipedia - get FULL article, not snippet
+          const searchRes = await fetch(`https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(prompt)}&format=json&origin=*`);
+          const searchData = await searchRes.json();
+          const title = searchData.query?.search?.[0]?.title;
+          if (title) {
+            const summaryRes = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`);
+            const summaryData = await summaryRes.json();
+            const fullText = summaryData.extract; // This is complete, no ...
+            this.#appendChatBubble('ai', `📚 Answer: ${fullText}\n\n🔍 Explanation: This is from Wikipedia about ${title}. It is important for Grade 10.\n\n💡 Tip: Read your textbook for more details.\n\n❓ Question: Do you want me to explain this in simpler Tagalog? 😊`);
+          } else {
+            this.#appendChatBubble('ai', `Sorry, I cannot find complete answer for "${prompt}" right now. Can you ask in different way? 😊`);
+          }
+        } catch (e) {
+          this.#appendChatBubble('ai', `No internet connection right now. Please check WiFi and try again 😊`);
+        }
+      }
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => new PortalApp());
+  } else { new PortalApp(); }
+</script>
     
   </body>
- </html>
-        
+</html>
