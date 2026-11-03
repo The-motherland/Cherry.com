@@ -22,8 +22,20 @@
    }
     
     img {
-      width: 980px;
-      height: 550px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50px;
+      padding: 20px;
+    }
+    
+    header {
+      padding: 20px;
+      border-bottom-left-radius: 20px;
+      border-bottom-right-radius: 20px;
+      background-color: White;
+      display: flex;
+      flex-direction: row;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
     }
     
     nav {
@@ -32,6 +44,7 @@
       gap: 10px;
       justify-content: center;
       padding: 10px;
+      border-radius: 20px;
       background: radial-gradient(lime, green);
       position: sticky;
       top: 0;
@@ -46,6 +59,7 @@
       font-size: 25px;
       gap: 20px;
       font-weight: bold;
+      cursor: pointer;
     }
     
     div {
@@ -138,10 +152,133 @@
       display: block;
     }
     
+    .PSV-page {
+      background-color: white;
+      border-radius: 20px;
+      padding: 20px;
+      border: 3px rgba(74, 222, 128, 0.3);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      max-width: 500px;
+      margin: 120px auto;
+    }
+    
+    .confirmation-btn {
+      background-color: navy;
+      padding: 10px 20px;
+      border-radius: 15px;
+      height: auto;
+      width: auto;
+      font-size: 14px;
+      text-align: center;
+      cursor: pointer;
+    }
+    
+    .AiAssistant-page {
+      background-color: white;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      border: 3px solid rgba(74, 222, 128, 0.3);
+      margin: 20px auto;
+      max-width: 900px;
+      overflow: hidden;
+    }
+    
+    .chat-card {
+      padding: 20px;
+      background-color: white;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    
+    .lenoraAi {
+      width: 200px;
+      height: 60px;
+      border-radius: 0;
+    }
+    
+    .lenoraAi-header {
+      border-radius: 0;
+      padding: 10px;
+      background-color: whitesmoke;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    /* --- Chat interface additions --- */
+    .chat-messages {
+      height: 380px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 10px;
+      border: 1px solid #eee;
+      border-radius: 12px;
+      background: #fafafa;
+    }
+
+    .chat-bubble {
+      max-width: 75%;
+      padding: 12px 16px;
+      border-radius: 16px;
+      font-size: 14px;
+      line-height: 1.5;
+      word-wrap: break-word;
+    }
+
+    .chat-bubble.user {
+      align-self: flex-end;
+      background-color: #14532d;
+      color: white;
+      border-bottom-right-radius: 2px;
+    }
+
+    .chat-bubble.ai {
+      align-self: flex-start;
+      background-color: #e2e8f0;
+      color: #0f172a;
+      border-bottom-left-radius: 2px;
+    }
+
+    .chat-input-area {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .chat-input-area input {
+      flex: 1;
+      border-radius: 12px;
+      border: 2px solid rgba(74, 222, 128, 0.5);
+      outline: none;
+      font-family: inherit;
+    }
+
+    .chat-send-btn {
+      background-color: green;
+      color: white;
+      border-radius: 12px;
+      padding: 0 25px;
+      font-size: 16px;
+    }
+    
   </style>
   <body>
-    <!-- Added Security Verification Section -->
-    <section id="securityVerification-card" class="V-page active">
+
+    <!-- STEP 1: Password Security Verification (Shows First) -->
+    <section id="passwordSecV" class="PSV-page V-page active">
+      <h2>Password Security Verification</h2>
+      <input type="password" id="passInput" placeholder="enter website pass key">
+      <p>Please enter the web password to visit the website</p>
+      <p id="passError" style="color: red; display: none; font-weight: bold;">Incorrect Password! Try again.</p>
+      <button type="button" id="confirmPassBtn" class="confirmation-btn">Confirm & Enter</button>
+    </section>
+
+    <!-- STEP 2: Added Security Verification Section (Shows After Password) -->
+    <section id="securityVerification-card" class="V-page hidden">
       <div class="verification-card">
         <input type="checkbox" id="security-checkbox">
         <p style="padding: 20px;" id="verification-text">Verification process, please wait, we are verifying possible phising or personal information stealer.</p>
@@ -149,21 +286,27 @@
       </div>
     </section>
 
-    <!-- Main Website Wrapped in V-page Section -->
+    <!-- STEP 3: Main Website Wrapped in V-page Section (Shows Last) -->
     <section id="main-portal-section" class="V-page hidden">
+      
       <header>
-        <img src="webBanner.png" id="home">
+        <img src="cherryLogo.jpg" id="home">
+        <h1>10 Cherry</h1>
       </header>
       
+      <br>
+      <br>
       
       <nav>
-        <a href="#home"><button>Home</button></a>
-        <a href="#class-officers"><button>Class Officers</button></a>
-        <a href="#advisory"><button>Advisory</button></a>
-        <a href="#privacy"><button>Privacy</button></a>
+        <a href="#home" class="nav-link"><button>Home</button></a>
+        <a href="#class-officers" class="nav-link"><button>Class Officers</button></a>
+        <a href="#advisory" class="nav-link"><button>Advisory</button></a>
+        <a href="#privacy" class="nav-link"><button>Privacy</button></a>
+        <a href="#lenoraAi" id="lenora-nav-btn"><button>Lenora Ai</button></a>
       </nav>
       
-      <div>
+      <!-- Home Content View -->
+      <div id="portal-content-view">
         <div class="rank-card">
           <h2><i class="fa-solid fa-ranking-star"></i>Ranking:</h2>
           <p>Rank: 3</p>
@@ -276,43 +419,199 @@
   <br>
   > <b>Our Commitment:</b> Your privacy is fully protected because we do not collect anything. You remain anonymous while using this website.</p>
         </div>
-        <br>
-        <br>
-        <footer>&copy; 2026 • Lapuz NHS • All rights reserved.</footer>
       </div>
+
+      <!-- Lenora AI Page View (Hidden by Default) -->
+      <div id="lenora-page-view" style="display: none; padding: 20px;">
+        <section id="lenoraAi" class="AiAssistant-page">
+          <header class="lenoraAi-header">
+            <img src="LenoraAi.png" class="lenoraAi" alt="Lenora AI Logo">
+          </header>
+          <div class="chat-card">
+            <div class="chat-messages" id="chatMessages">
+              <div class="chat-bubble ai">
+                Hello! I am Lenora AI, your Grade 10 Cherry assistant. How can I help you today?
+              </div>
+            </div>
+            <div class="chat-input-area">
+              <input type="text" id="userInput" placeholder="Type your message here...">
+              <button type="button" id="sendBtn" class="chat-send-btn"><i class="fa-solid fa-paper-plane"></i> Send</button>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <br>
+      <br>
+      <footer>&copy; 2026 • Lapuz NHS • All rights reserved.</footer>
     </section>
 
-    <!-- Added Verification JavaScript Function -->
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const checkbox = document.getElementById('security-checkbox');
-        const verificationText = document.getElementById('verification-text');
-        const verificationSection = document.getElementById('securityVerification-card');
-        const mainPortalSection = document.getElementById('main-portal-section');
+    <!-- Refactored ECMAScript 2026 Application Logic -->
+    <script type="module">
+      // System Configuration & Constants
+      const CONFIG = Object.freeze({
+        API_KEY: "AQ.Ab8RN6Lf0MX9IWluCUASqH30H7FadCmT_KvJypUWvl9JZWYkeQ",
+        PASSKEY: "10CHERRY",
+        API_URL: "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent"
+      });
 
-        if (checkbox) {
-          checkbox.addEventListener('change', () => {
-            if (checkbox.checked) {
-              checkbox.disabled = true;
-              verificationText.innerText = "Checking security parameters... Please wait.";
+      // Utility Helper for Delaying Actions
+      const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-              setTimeout(() => {
-                verificationText.innerText = "Verified successfully! Redirecting to portal...";
+      // Global Portal State Controller
+      class PortalApp {
+        #elements = {};
 
-                setTimeout(() => {
-                  verificationSection.classList.remove('active');
-                  verificationSection.classList.add('hidden');
+        constructor() {
+          this.#initElements();
+          this.#bindEvents();
+        }
 
-                  mainPortalSection.classList.remove('hidden');
-                  mainPortalSection.classList.add('active');
-                }, 600);
-                
-              }, 1500);
-            }
+        #initElements() {
+          this.#elements = {
+            passSec: document.getElementById('passwordSecV'),
+            passInput: document.getElementById('passInput'),
+            confirmPassBtn: document.getElementById('confirmPassBtn'),
+            passError: document.getElementById('passError'),
+            verificationSection: document.getElementById('securityVerification-card'),
+            checkbox: document.getElementById('security-checkbox'),
+            verificationText: document.getElementById('verification-text'),
+            mainPortalSection: document.getElementById('main-portal-section'),
+            portalContentView: document.getElementById('portal-content-view'),
+            lenoraPageView: document.getElementById('lenora-page-view'),
+            lenoraNavBtn: document.getElementById('lenora-nav-btn'),
+            homeNavLinks: document.querySelectorAll('.nav-link'),
+            chatMessages: document.getElementById('chatMessages'),
+            userInput: document.getElementById('userInput'),
+            sendBtn: document.getElementById('sendBtn')
+          };
+        }
+
+        #bindEvents() {
+          // Password Authentication Event
+          this.#elements.confirmPassBtn?.addEventListener('click', () => this.#handlePasswordValidation());
+          this.#elements.passInput?.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') this.#handlePasswordValidation();
+          });
+
+          // Security Checkbox Verification Event
+          this.#elements.checkbox?.addEventListener('change', () => this.#handleSecurityVerification());
+
+          // Page Switcher Navigation Events
+          this.#elements.lenoraNavBtn?.addEventListener('click', (e) => {
+            e.preventDefault();
+            this.#switchView('lenora');
+          });
+
+          this.#elements.homeNavLinks?.forEach((link) => {
+            link.addEventListener('click', () => this.#switchView('home'));
+          });
+
+          // Lenora AI Chat Events
+          this.#elements.sendBtn?.addEventListener('click', () => this.#handleChatMessage());
+          this.#elements.userInput?.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') this.#handleChatMessage();
           });
         }
-      });
+
+        #handlePasswordValidation() {
+          const enteredPass = this.#elements.passInput?.value?.trim();
+          if (enteredPass === CONFIG.PASSKEY) {
+            this.#elements.passError.style.display = 'none';
+            this.#toggleSection(this.#elements.passSec, false);
+            this.#toggleSection(this.#elements.verificationSection, true);
+          } else {
+            this.#elements.passError.style.display = 'block';
+          }
+        }
+
+        async #handleSecurityVerification() {
+          if (!this.#elements.checkbox?.checked) return;
+
+          this.#elements.checkbox.disabled = true;
+          this.#elements.verificationText.innerText = "Checking security parameters... Please wait.";
+
+          await delay(1500);
+          this.#elements.verificationText.innerText = "Verified successfully! Redirecting to portal...";
+
+          await delay(600);
+          this.#toggleSection(this.#elements.verificationSection, false);
+          this.#toggleSection(this.#elements.mainPortalSection, true);
+        }
+
+        #switchView(viewTarget) {
+          if (viewTarget === 'lenora') {
+            this.#elements.portalContentView.style.display = 'none';
+            this.#elements.lenoraPageView.style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          } else {
+            this.#elements.lenoraPageView.style.display = 'none';
+            this.#elements.portalContentView.style.display = 'block';
+          }
+        }
+
+        #toggleSection(element, show) {
+          if (!element) return;
+          if (show) {
+            element.classList.remove('hidden');
+            element.classList.add('active');
+          } else {
+            element.classList.remove('active');
+            element.classList.add('hidden');
+          }
+        }
+
+        #appendChatBubble(sender, messageText) {
+          const bubble = document.createElement('div');
+          bubble.classList.add('chat-bubble', sender);
+          bubble.innerText = messageText;
+          this.#elements.chatMessages?.appendChild(bubble);
+          this.#elements.chatMessages.scrollTop = this.#elements.chatMessages.scrollHeight;
+          return bubble;
+        }
+
+        async #handleChatMessage() {
+          const prompt = this.#elements.userInput?.value?.trim();
+          if (!prompt) return;
+
+          this.#appendChatBubble('user', prompt);
+          this.#elements.userInput.value = '';
+
+          const loadingBubble = this.#appendChatBubble('ai', 'Lenora is typing...');
+
+          try {
+            const response = await fetch(`${CONFIG.API_URL}?key=${CONFIG.API_KEY}`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                contents: [{ parts: [{ text: prompt }] }]
+              })
+            });
+
+            const data = await response.json();
+            loadingBubble.remove();
+
+            const aiReply = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+            if (aiReply) {
+              this.#appendChatBubble('ai', aiReply);
+            } else {
+              this.#appendChatBubble('ai', "Sorry, I couldn't process your request right now.");
+            }
+          } catch (error) {
+            loadingBubble.remove();
+            this.#appendChatBubble('ai', "Unable to connect. Please check network connection or API status.");
+          }
+        }
+      }
+
+      // Initialize App automatically once DOM content is ready
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => new PortalApp());
+      } else {
+        new PortalApp();
+      }
     </script>
     
   </body>
-  </html>
+ </html>
+        
